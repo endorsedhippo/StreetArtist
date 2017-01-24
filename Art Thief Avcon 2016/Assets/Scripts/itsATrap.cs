@@ -4,7 +4,7 @@ using System.Collections;
 public class itsATrap : MonoBehaviour {
 
 
-	public GameObject sprite;
+	public GameObject trap;
 	// Use this for initialization
 	void Start () {
 	
@@ -20,13 +20,7 @@ public class itsATrap : MonoBehaviour {
 		if (other.tag == "Player")
 		{
 			Vector3 pos = new Vector3 (0, 5,0);
-			Instantiate (sprite, transform.position, transform.rotation);
-			Destroy (gameObject);
-		}
-		if (other.tag == "Player 2")
-		{
-			Vector3 pos = new Vector3 (0, 5,0);
-			Instantiate (sprite, transform.position, transform.rotation);
+			Instantiate (trap, transform.position, transform.rotation);
 			Destroy (gameObject);
 		}
 	}
