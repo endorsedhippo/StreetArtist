@@ -26,13 +26,14 @@ public class PlayerController : MonoBehaviour {
     PlayerIcon icon;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         xScale = Mathf.Abs(transform.localScale.x);
         icon = playerIcon.GetComponent<PlayerIcon>();
+        icon.SetPlayerNumber(playerNumber);
 
         if (direction == 0)
             direction = 1;
@@ -41,12 +42,19 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        CheckGround();
 
-        JumpandMovement();
+        if (!Pauser.paused)
+        {
+            CheckGround();
 
-        Platforms();
-        
+            JumpandMovement();
+
+            Platforms();
+        }
+        else
+        {
+            IconInputs();
+        }
 
         //Animation paramaters
         animator.SetFloat("Speed", Mathf.Abs(xMovement));
@@ -129,6 +137,29 @@ public class PlayerController : MonoBehaviour {
 
     void IconInputs()
     {
+        if (Input.GetAxis("P" + playerNumber + "_DrawRight") > 0.9f
+            && Input.GetKey("joystick " + playerNumber + " button 0"))
+        {
+            icon.TakePicture();
+        }
+        else if (Input.GetAxis("P" + playerNumber + "_DrawRight") > 0.9f
+            && Input.GetKey("joystick " + playerNumber + " button 1")
+            || Input.GetKey(playerNumber.ToString()))
+        {
+            icon.SetToDefault();
+        }
 
+        else if (Input.GetAxis("P" + playerNumber + "_DrawRight") > 0.9f
+            && Input.GetKey("joystick " + playerNumber + " button 2"))
+        {
+            icon.SetReady(true);
+        }
+
+        else if (Input.GetAxis("P" + playerNumber + "_DrawRight") > 0.9f
+            && Input.GetKey("joystick " + playerNumber + " button 3"))
+        {
+            icon.SetToDefault();
+            icon.SetReady(false);
+        }
     }
 }

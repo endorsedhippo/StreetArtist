@@ -20,6 +20,7 @@ public class WinDebug : MonoBehaviour {
 		Time.timeScale = 0.3f;
 		yield return new WaitForSeconds (1);
 		Time.timeScale = 1;
+        Pauser.SaveMaterials();
 		Application.LoadLevel ("P" + playerNumber + "_FinishScreen");
 	}
 
